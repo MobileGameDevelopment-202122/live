@@ -100,7 +100,7 @@
 										</li>
 										
 										<li >
-											<a href="../../../topics/01-Lua_Programming/index.html#04-Lua_Language">Lua Language</a>
+											<a href="../../../topics/01-Lua_Programming/index.html#04-Lua_Programming_Tasks">Lua Programming Tasks</a>
 										</li>
 										
 									</ul>
@@ -149,20 +149,17 @@
 		
 		<h1>Lua Programming Tasks</h1>
 <h2>Introduction</h2>
-<p>These four tasks are more focused on programming and not on learning the language. It is intended to see what your programming/algorithmic skills are like.</p>
-<p>The <a href="files/Lua_Programming_Tasks.zip">problem set</a> has similar structure to the <a href="../02-30-Days_of_Code/00-Outline.html">30 Days of Code Lua</a> and uses the same <code>main.lua</code> file to test solutions.</p>
+<p>This is a short activity based on the discussion we had in a last lab re building functions to perform basic array operations.</p>
+<p>In the attached <a href="files/myArrayLib.lua">lua file</a> you are to implement the following functions (note the spec has changed slightly from that given in the lab):</p>
 <ul>
-<li>Open ZeroBaneEditor and open main lua file <code>main.lua</code>.</li>
-<li>
-<p>Rather than tests all of the scripts every time, set the command line parameter (Menu Project-&gt;Command line arguments...) to the problem number.</p>
-</li>
-<li>
-<p>Complete the given problems.</p>
-</li>
-<li>
-<p>Create ZIP archive with same structure as original, and upload using the link below. (due date to be decided on week 2, Wed session.)</p>
-</li>
+<li><code>min</code> return the minimum value in the table or <code>nil</code> if none.</li>
+<li><code>max</code> return the maximum value in the table or <code>nil</code> if none.</li>
+<li><code>secondMax</code> return the second largest value in the table or <code>nil</code> if none. Duplicate values are ignored.</li>
+<li><code>whereIsMax</code> return a table (note change in spec here) of positions containing maximum value.</li>
+<li><code>leftOfMax</code> returns value to left of first instance of max values in table.</li>
+<li><code>lenOfLongestIncreasingSubsequence</code> returns number of elements in longest subsequence of contiguous increasing values.  (Note you have to add the test data for this.)</li>
 </ul>
+<p>Implement the functions and add suitable test data, then upload source to Moodle using:</p>
 <div class="pager">
 <a class="btn btn-primary btn-lg" target="_blank" href="https://moodle.wit.ie/mod/assign/view.php?id=3544656" role="button">Submit using Moodle</a>
 </div>
