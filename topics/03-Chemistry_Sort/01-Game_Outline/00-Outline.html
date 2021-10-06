@@ -164,7 +164,8 @@
 <li>Download and extract the contents of the assets <a href="files/assets.zip">archive</a>. This archive contains images (only one!) and some utility code.</li>
 </ul>
 <h3>Game Data</h3>
-<p>Place the follow code into your <code>main.lua</code> file.  Hopefully the purpose of each</p>
+<p>Copy the <code>rng.lua`` and</code>colorsRGB.lua` into the root folder.</p>
+<p>Place the following code into your <code>main.lua</code> file. </p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -184,10 +185,14 @@
 <span class="normal">17</span>
 <span class="normal">18</span>
 <span class="normal">19</span>
-<span class="normal">20</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">FULL</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1">-- number of drops to full a tube</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">FULL</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1">-- number of drops to full a tube</span>
 
 <span class="kd">local</span> <span class="n">tubes</span> <span class="o">=</span> <span class="p">{</span> <span class="p">}</span>
 <span class="kd">local</span> <span class="n">selectedDrop</span>
+
+<span class="kd">local</span> <span class="n">rng</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;rng&quot;</span><span class="p">)</span>
 
 <span class="kd">local</span> <span class="n">colorsRGB</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;colorsRGB&quot;</span><span class="p">)</span>
 <span class="kd">local</span> <span class="n">colors</span> <span class="o">=</span> <span class="p">{</span>
@@ -297,7 +302,7 @@
 <span class="kr">end</span> 
 
 
-<span class="kd">local</span> <span class="kr">function</span> <span class="nf">moveDrop</span><span class="p">(</span> <span class="n">event</span> <span class="p">)</span> 
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">moveDrop</span><span class="p">(</span><span class="n">event</span><span class="p">)</span> 
     <span class="c1">-- Pick up/drop a drop from/to selected tube.</span>
 
     <span class="c1">-- we will come back to this later</span>
@@ -335,37 +340,35 @@
 <span class="normal">28</span>
 <span class="normal">29</span>
 <span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">local</span> <span class="n">function</span> <span class="n">startLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
-    <span class="o">--</span> <span class="n">create</span> <span class="n">level</span> <span class="n">with</span> <span class="n">given</span> <span class="n">parameters</span>
+<span class="normal">31</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">startLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+    <span class="c1">-- create level with given parameters</span>
 
-    <span class="o">--</span> <span class="n">number</span> <span class="n">of</span> <span class="n">colors</span><span class="p">,</span> <span class="n">number</span> <span class="n">of</span> <span class="n">spare</span> <span class="n">tubes</span><span class="p">,</span> <span class="n">level</span> <span class="n">difficulty</span> <span class="ow">and</span> <span class="n">duration</span>
-    <span class="n">local</span> <span class="n">nColors</span><span class="p">,</span> <span class="n">nSwap</span><span class="p">,</span> <span class="n">nDifficulty</span><span class="p">,</span> <span class="n">duration</span> <span class="o">=</span> <span class="n">unpack</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
-    <span class="n">local</span> <span class="n">nTubes</span> <span class="o">=</span> <span class="n">nColors</span> <span class="o">+</span> <span class="n">nSwap</span>
-
-
-    <span class="o">--</span> <span class="n">instaniate</span> <span class="n">all</span> <span class="n">of</span> <span class="n">the</span> <span class="n">tubes</span>
-        <span class="o">--</span> <span class="n">put</span> <span class="ow">in</span> <span class="n">correct</span> <span class="n">position</span>
-        <span class="o">--</span> <span class="n">table</span> <span class="n">property</span> <span class="n">drops</span> <span class="n">to</span> <span class="n">store</span> <span class="n">drops</span>
-        <span class="o">--</span> <span class="n">add</span> <span class="n">tap</span> <span class="n">event</span> <span class="n">lisenter</span> <span class="n">to</span> <span class="n">call</span> <span class="n">moveDrop</span>
-        <span class="o">--</span> <span class="n">first</span> <span class="n">nColors</span> <span class="n">start</span> <span class="n">being</span> <span class="n">full</span> <span class="n">of</span> <span class="n">drops</span> <span class="n">of</span> <span class="n">one</span> <span class="n">color</span>
+    <span class="c1">-- number of colors, number of spare tubes, level difficulty and duration</span>
+    <span class="kd">local</span> <span class="n">nColors</span><span class="p">,</span> <span class="n">nSwap</span><span class="p">,</span> <span class="n">nDifficulty</span><span class="p">,</span> <span class="n">duration</span> <span class="o">=</span> <span class="n">unpack</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+    <span class="kd">local</span> <span class="n">nTubes</span> <span class="o">=</span> <span class="n">nColors</span> <span class="o">+</span> <span class="n">nSwap</span>
 
 
-    <span class="n">math</span><span class="o">.</span><span class="n">randomseed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="c1">-- instaniate all of the tubes</span>
+        <span class="c1">-- put in correct position</span>
+        <span class="c1">-- table property drops to store drops</span>
+        <span class="c1">-- add tap event lisenter to call moveDrop</span>
+        <span class="c1">-- first nColors start being full of drops of one color</span>
 
-    <span class="o">--</span> <span class="n">using</span> <span class="n">nDifficulty</span> <span class="n">randomise</span> <span class="n">the</span> <span class="n">starting</span> <span class="n">position</span>
-       <span class="o">--</span> <span class="n">possible</span> <span class="n">algorithm</span><span class="p">:</span> 
-          <span class="o">--</span> <span class="n">pick</span> <span class="n">random</span> <span class="n">source</span> <span class="ow">and</span> <span class="n">destination</span> <span class="n">tubes</span> <span class="ow">and</span> <span class="n">move</span> <span class="n">drop</span> <span class="k">if</span> <span class="n">allowed</span><span class="o">.</span>
-          <span class="o">--</span> <span class="n">repeat</span> <span class="n">based</span> <span class="n">on</span> <span class="n">nDifficulty</span>
+    <span class="n">rng</span><span class="p">.</span><span class="n">randomseed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+    <span class="c1">-- using nDifficulty randomise the starting position</span>
+       <span class="c1">-- possible algorithm: </span>
+          <span class="c1">-- pick random source and destination tubes and move drop if allowed.</span>
+          <span class="c1">-- repeat based on nDifficulty</span>
 
 
-    <span class="o">--</span> <span class="n">initialise</span> <span class="n">game</span> <span class="n">variables</span> <span class="p">(</span><span class="n">moves</span><span class="p">,</span> <span class="n">etc</span><span class="p">)</span>
+    <span class="c1">-- initialise game variables (moves, etc)</span>
 
-    <span class="o">--</span> <span class="n">start</span> <span class="n">countdown</span> <span class="n">clock</span> 
-       <span class="o">--</span> <span class="n">Use</span> <span class="n">timer</span><span class="o">.</span><span class="n">performWithDelay</span> <span class="n">with</span> <span class="mi">1</span> <span class="n">second</span> <span class="n">delay</span>
-       <span class="o">--</span> <span class="n">Need</span> <span class="n">function</span> <span class="n">updateClock</span> <span class="n">to</span> <span class="n">update</span> <span class="n">timeRemaining</span> <span class="ow">and</span> <span class="n">text</span> <span class="n">label</span>
+    <span class="c1">-- start countdown clock </span>
+       <span class="c1">-- Use timer.performWithDelay with 1 second delay</span>
+       <span class="c1">-- Need function updateClock to update timeRemaining and text label</span>
 
-<span class="n">end</span>
+<span class="kr">end</span>
 
 <span class="n">startLevel</span><span class="p">({</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span> <span class="mi">90</span><span class="p">})</span>
 </code></pre></div>
@@ -401,7 +404,6 @@
 </code></pre></div>
 </td></tr></table>
 <h2>Improvements / Assignment</h2>
-<p>Update:  Random number generator code <a href="files/rng.lua">rng.lua</a></p>
 <p>Using the shell provided complete the game and implement the following improvements. (
 max grade is an estimate.)</p>
 <h3>Basic improvements (max 40%)</h3>
@@ -409,7 +411,7 @@ max grade is an estimate.)</p>
 <li>Convert to using scenes (Menu, high scores, and game).</li>
 <li>Support for reset level.</li>
 <li>Support unlimited undo.</li>
-<li>Support for canceling move &mdsh; pick up a drop and place it back down in same tube.</li>
+<li>Support for canceling move &mdash; pick up a drop and place it back down in same tube </li>
 </ul>
 <h3>Intermediate improvements (max 60%)</h3>
 <ul>
@@ -422,7 +424,7 @@ max grade is an estimate.)</p>
 <li>Support showing solution to problem</li>
 </ul>
 <div class="pager">
-<a class="btn btn-primary btn-lg" target="_blank" href="https://moodle.wit.ie/mod/assign/view.php?id=3352156" role="button">Submit using Moodle</a>
+<a class="btn btn-primary btn-lg" target="_blank" href="https://moodle.wit.ie/mod/assign/view.php?id=3603256" role="button">Submit using Moodle</a>
 </div>
 		
 		<ul class="pager">
