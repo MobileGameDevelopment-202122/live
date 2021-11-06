@@ -119,7 +119,7 @@
 							<ul class="nav navbar-nav">
 								<li class="dropdown">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-										<span>Toggling Flowers</span
+										<span>Generating Flower Count</span
 									</a>
 									<ul class="dropdown-menu" role="menu">
 										
@@ -139,11 +139,11 @@
 											<a href="03-Drawing_Tiles.html">Drawing Tiles</a>
 										</li>
 										
-										<li class="active">
+										<li >
 											<a href="04-Toggling_Flowers.html">Toggling Flowers</a>
 										</li>
 										
-										<li >
+										<li class="active">
 											<a href="05-Generating_Flower_Count.html">Generating Flower Count</a>
 										</li>
 										
@@ -191,60 +191,23 @@
 		
 		<ul class="pager">
 			
-			<li class="previous"><a href="03-Drawing_Tiles.html">&larr; Previous (Drawing Tiles)</a></li>
+			<li class="previous"><a href="04-Toggling_Flowers.html">&larr; Previous (Toggling Flowers)</a></li>
 			
 			
 			
-			<li class="next"><a href="05-Generating_Flower_Count.html">Next (Generating Flower Count) &rarr;</a></li>
+			<li class="next"><a href="06-Uncover_Cells.html">Next (Uncover Cells) &rarr;</a></li>
 			
 		</ul>
 		
-		<h1>Use Tap Event to Toggle Flowers</h1>
-<p>To test the use of the <code>tap</code> event we are going to toggle a flower. The required structure is</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">onTap</span><span class="p">(</span> <span class="n">event</span> <span class="p">)</span>
-
-    <span class="c1">-- determine position of event</span>
-
-    <span class="c1">-- ignore events outside of grid</span>
-
-
-    <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Event TAP at row &quot;</span><span class="o">..</span><span class="n">row</span><span class="o">..</span><span class="s2">&quot; and col &quot;</span><span class="o">..</span><span class="n">col</span><span class="p">)</span>
-
-    <span class="c1">-- toggle flower in current cell</span>
-
-<span class="kr">end</span>
-
-<span class="n">Runtime</span><span class="p">:</span><span class="n">addEventListener</span><span class="p">(</span> <span class="s2">&quot;tap&quot;</span><span class="p">,</span> <span class="n">onTap</span> <span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
-<p>To determine the position (row,col) of the event we use</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="c1">-- determine position of event</span>
-    <span class="kd">local</span> <span class="n">col</span> <span class="o">=</span> <span class="nb">math.floor</span><span class="p">(</span> <span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">x</span><span class="o">-</span><span class="n">hoffset</span><span class="p">)</span> <span class="o">/</span> <span class="n">size</span> <span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="kd">local</span> <span class="n">row</span> <span class="o">=</span> <span class="nb">math.floor</span><span class="p">(</span> <span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">y</span><span class="o">-</span><span class="n">voffset</span><span class="p">)</span> <span class="o">/</span> <span class="n">size</span> <span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-</code></pre></div>
-</td></tr></table>
-<p>and we then ignore events outside the grid by</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="c1">-- ignore events outside of grid</span>
-    <span class="kr">if</span> <span class="n">col</span><span class="o">&lt;</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">col</span><span class="o">&gt;</span><span class="n">cols</span> <span class="ow">or</span> <span class="n">row</span><span class="o">&lt;</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">row</span><span class="o">&gt;</span><span class="n">rows</span> <span class="kr">then</span> <span class="kr">return</span> <span class="kr">end</span>
-</code></pre></div>
-</td></tr></table>
-<p>To toggle flower at the current location we use</p>
+		<h1>Generating Flower Count</h1>
+<p>NOTE: from this point onwards I deviated slightly from these notes when coding this game in the lab.  The general structure is the same but identifier names or sequence of operations may differ.</p>
+<p>Next we need to generate the number of flowers in neighbouring cells. To do this we write two functions</p>
+<ul>
+<li><code>computeFlowerCount</code> is called once, at the start of each level.</li>
+<li><code>update</code> is called after every <code>tap</code> event to display the flower counts in the uncovered cells.</li>
+</ul>
+<h2>Table  <code>directions</code></h2>
+<p>We want a table of offsets to get a neighbour of a cell. We can do this using </p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
@@ -252,30 +215,69 @@
 <span class="normal">5</span>
 <span class="normal">6</span>
 <span class="normal">7</span>
-<span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kr">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">].</span><span class="n">flower</span> <span class="kr">then</span> 
-        <span class="n">setTile</span><span class="p">(</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="s2">&quot;upper&quot;</span><span class="p">)</span>
-        <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="s2">&quot;Removing flower&quot;</span><span class="p">)</span>
-    <span class="kr">else</span> 
-        <span class="n">setTile</span><span class="p">(</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="s2">&quot;upper&quot;</span><span class="p">,</span> <span class="s2">&quot;flower&quot;</span><span class="p">)</span>
-        <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="s2">&quot;Adding flower&quot;</span><span class="p">)</span>
-    <span class="kr">end</span> 
-    <span class="n">grid</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">].</span><span class="n">flower</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">grid</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">].</span><span class="n">flower</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">directions</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="kr">for</span> <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="kr">do</span>
+    <span class="kr">for</span> <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="kr">do</span>
+        <span class="kr">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">dy</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">dx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="kr">then</span>
+            <span class="nb">table.insert</span><span class="p">(</span><span class="n">directions</span><span class="p">,</span> <span class="p">{</span><span class="n">dx</span><span class="o">=</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="o">=</span><span class="n">dy</span><span class="p">}</span> <span class="p">)</span>
+        <span class="kr">end</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
 </code></pre></div>
 </td></tr></table>
-<h2>Testing</h2>
-<p>Run the above code and click a few cells you should get debug log output similar to below.</p>
-<figure>
-  <img src="files/debug_log_taggle_flower.png" alt="" width="60%" >
-  <figcaption>Debug log of testing the tap event to toggle flowers.</figcaption>
-</figure>
+<h2>Function <code>computeFlowerCount</code></h2>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">computeFlowerCount</span><span class="p">()</span>
+
+    <span class="c1">-- iterate over all cells in grid, so current cell is grid[row][col]</span>
+        <span class="kd">local</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1">-- iterate over all neighbors of current cell (using directions table)</span>
+            <span class="c1">-- if neighbor cell contains a flower then increment count</span>
+        <span class="c1">-- store count as property grid[row][col].neighbors</span>
+<span class="kr">end</span>
+</code></pre></div>
+</td></tr></table>
+<h2>Function <code>update</code></h2>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">update</span><span class="p">()</span>
+
+    <span class="c1">-- iterate over all cells in grid, so current cell is grid[row][col]</span>
+        <span class="c1">-- if current cell has neighbors with flowers then set the upper tile to be the appropriate number using </span>
+        <span class="n">setTile</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="s1">&#39;upper&#39;</span><span class="p">,</span> <span class="s2">&quot;n_&quot;</span><span class="o">..</span><span class="n">grid</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">].</span><span class="n">neighbors</span><span class="p">)</span>
+
+<span class="kr">end</span>
+</code></pre></div>
+</td></tr></table>
+<p>This will always display the number of flowers -- useful for debugging -- later when actually playing the game we only want to see the neighbour count when cells uncovered. To get this effect you need to modify the <code>if</code> condition to</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="c1">-- if current cell has neighbors with flowers and current cell state is uncovered then</span>
+</code></pre></div>
+</td></tr></table>
+<p>to use put</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">computeFlowerCount</span><span class="p">()</span>
+<span class="n">update</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+<p>after call to <code>resetLevel</code>.</p>
 		
 		<ul class="pager">
 			
-			<li class="previous"><a href="03-Drawing_Tiles.html">&larr; Previous (Drawing Tiles)</a></li>
+			<li class="previous"><a href="04-Toggling_Flowers.html">&larr; Previous (Toggling Flowers)</a></li>
 			
 			
 			
-			<li class="next"><a href="05-Generating_Flower_Count.html">Next (Generating Flower Count) &rarr;</a></li>
+			<li class="next"><a href="06-Uncover_Cells.html">Next (Uncover Cells) &rarr;</a></li>
 			
 		</ul>
 

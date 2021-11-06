@@ -119,11 +119,11 @@
 							<ul class="nav navbar-nav">
 								<li class="dropdown">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-										<span>Outline</span
+										<span>First Tap is Safe</span
 									</a>
 									<ul class="dropdown-menu" role="menu">
 										
-										<li class="active">
+										<li >
 											<a href="00-Outline.html">Outline</a>
 										</li>
 										
@@ -151,7 +151,7 @@
 											<a href="06-Uncover_Cells.html">Uncover Cells</a>
 										</li>
 										
-										<li >
+										<li class="active">
 											<a href="07-First_Tap_is_Safe.html">First Tap is Safe</a>
 										</li>
 										
@@ -191,69 +191,43 @@
 		
 		<ul class="pager">
 			
-			<li class="previous disabled"><a>&larr; Previous</a></li>
+			<li class="previous"><a href="06-Uncover_Cells.html">&larr; Previous (Uncover Cells)</a></li>
 			
 			
 			
-			<li class="next"><a href="01-Project_Setup.html">Next (Project Setup) &rarr;</a></li>
+			<li class="next"><a href="08-Flags_and_Questions.html">Next (Flags and Questions) &rarr;</a></li>
 			
 		</ul>
 		
-		<h1>Minesweeper</h1>
-<h2>Outline</h2>
-<p>This implementation very closely follows that described in <a href="https://simplegametutorials.github.io/flowers">Let's make some games with LÖVE 11 - Flowers</a> and consists of the following main steps:</p>
-<ul>
-<li><a href="01-Project_Setup.html">Project Setup</a><br/>
-   Create a new blank project using Tablet preset in landscape mode. </li>
-<li><a href="02-Load_Images.html">Load Images</a><br/>
-   Create image sheet and layout grid for game.</li>
-<li><a href="03-Drawing_Tiles.html">Drawing Tiles</a><br/>
-   Create grid of tiles and random placement of flowers to start game.</li>
-<li><a href="04-Toggling_Flowers.html">Toggling Flowers</a><br/>
-   Use <code>tap</code> event to toggle flowers. </li>
-<li><a href="05-Generating_Flower_Count.html">Generating Flower Count</a><br/>
-   Count the number of neighbouring cells that contain flowers and output labels.</li>
-<li><a href="06-Uncover_Cells.html">Uncover Cells</a><br/>
-   Use a flood fill to uncover cells that are not neighbouring a flower.</li>
-<li><a href="07-First_Tap_is_Safe.html">First Tap is Safe</a><br/>
-   Ensure that the first tap does not uncover a flower.</li>
-<li><a href="08-Flags_and_Questions.html">Flags and Questions</a><br/>
-   Change from <code>tap</code> to a <code>touch</code> event to support flags and questions.</li>
-<li><a href="09-Cleaning_Up.html">Cleaning Up</a><br/>
-   Hide neighbour counts.</li>
-<li><a href="10-Check_for_Level_Win.html">Check for Level Win</a><br/>
-   Level win occurs when all flower locations have been identified.</li>
-</ul>
-<p>Additional steps</p>
-<ul>
-<li><a href="11-Scoring.html">Scoring</a><br/>
-   Level win occurs when all flower locations have been identified.</li>
-<li><a href="12-Menu_and_Top_Score.html">Menu and Top Score</a><br/>
-   Level win occurs when all flower locations have been identified.</li>
-</ul>
-<figure>
-  <img src="files/final_no_ui.png" alt="" width="60%" >
-  <figcaption>Completed version of game with UI missing</figcaption>
-</figure>
-
-<h3>Rules</h3>
-<p>The game starts with a grid of covered cells. Under some of the cells are flowers. The game is over when a flower is uncovered.</p>
-<p>Tapping on a cell uncovers it, and if none of its adjacent cells contain flowers, then the adjacent cells are also uncovered, and for those uncovered cells, if none of their adjacent cells contain flowers, they are also uncovered, and so on.</p>
-<p>Touch and hold on a cell toggles between the cell having a flag, a question mark, or nothing. Flags prevent a cell from being uncovered with a tap. Question marks are visual markers which don't affect what happens when the cell is clicked.</p>
-<h3>Assignment</h3>
-<p>We have worked through the steps in the lab sessions, so this assignment is just a check to see that you are keeping pace with the sessions.  </p>
-<p>Once you have completed the above steps </p>
-<div class="pager">
-<a class="btn btn-primary btn-lg" target="_blank" href="https://moodle.wit.ie/mod/assign/view.php?id=3610888" role="button">Submit using Moodle</a>
-</div>
+		<h1>First Tap is Safe</h1>
+<p>We don't want the user to lose on the first click.  This is easy to do if we delay placing the flowers until AFTER the player clicks on the grid for the first time.  It is actually easy to do.</p>
+<p>Define a file local variable</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">firstTap</span> <span class="o">=</span> <span class="n">True</span>
+</code></pre></div>
+</td></tr></table>
+<p>then in <code>onTap</code> we write</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="o">--</span> <span class="nv">place</span> <span class="nv">flowers</span> <span class="nv">on</span> <span class="nv">first</span> <span class="nv">call</span>
+    <span class="k">if</span> <span class="nv">firstTap</span> <span class="k">then</span>
+        <span class="nv">placeFlowers</span><span class="ss">(</span> {<span class="nv">flowerCount</span><span class="o">=</span><span class="nv">flowerCount</span>, <span class="nv">row</span><span class="o">=</span><span class="nv">row</span>, <span class="nv">col</span><span class="o">=</span><span class="nv">col</span>} <span class="ss">)</span>
+        <span class="nv">firstTap</span> <span class="o">=</span> <span class="nv">false</span>
+        <span class="nv">updateGrid</span><span class="ss">()</span>
+    <span class="k">end</span>
+</code></pre></div>
+</td></tr></table>
+<p>The function <code>placeFlowers</code> consists of the loop that was in <code>resetLevel</code> that placed the flowers.</p>
 		
 		<ul class="pager">
 			
-			<li class="previous disabled"><a>&larr; Previous</a></li>
+			<li class="previous"><a href="06-Uncover_Cells.html">&larr; Previous (Uncover Cells)</a></li>
 			
 			
 			
-			<li class="next"><a href="01-Project_Setup.html">Next (Project Setup) &rarr;</a></li>
+			<li class="next"><a href="08-Flags_and_Questions.html">Next (Flags and Questions) &rarr;</a></li>
 			
 		</ul>
 

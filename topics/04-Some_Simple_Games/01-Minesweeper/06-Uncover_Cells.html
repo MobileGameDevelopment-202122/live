@@ -119,11 +119,11 @@
 							<ul class="nav navbar-nav">
 								<li class="dropdown">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-										<span>Outline</span
+										<span>Uncover Cells</span
 									</a>
 									<ul class="dropdown-menu" role="menu">
 										
-										<li class="active">
+										<li >
 											<a href="00-Outline.html">Outline</a>
 										</li>
 										
@@ -147,7 +147,7 @@
 											<a href="05-Generating_Flower_Count.html">Generating Flower Count</a>
 										</li>
 										
-										<li >
+										<li class="active">
 											<a href="06-Uncover_Cells.html">Uncover Cells</a>
 										</li>
 										
@@ -191,69 +191,57 @@
 		
 		<ul class="pager">
 			
-			<li class="previous disabled"><a>&larr; Previous</a></li>
+			<li class="previous"><a href="05-Generating_Flower_Count.html">&larr; Previous (Generating Flower Count)</a></li>
 			
 			
 			
-			<li class="next"><a href="01-Project_Setup.html">Next (Project Setup) &rarr;</a></li>
+			<li class="next"><a href="07-First_Tap_is_Safe.html">Next (First Tap is Safe) &rarr;</a></li>
 			
 		</ul>
 		
-		<h1>Minesweeper</h1>
-<h2>Outline</h2>
-<p>This implementation very closely follows that described in <a href="https://simplegametutorials.github.io/flowers">Let's make some games with LÖVE 11 - Flowers</a> and consists of the following main steps:</p>
-<ul>
-<li><a href="01-Project_Setup.html">Project Setup</a><br/>
-   Create a new blank project using Tablet preset in landscape mode. </li>
-<li><a href="02-Load_Images.html">Load Images</a><br/>
-   Create image sheet and layout grid for game.</li>
-<li><a href="03-Drawing_Tiles.html">Drawing Tiles</a><br/>
-   Create grid of tiles and random placement of flowers to start game.</li>
-<li><a href="04-Toggling_Flowers.html">Toggling Flowers</a><br/>
-   Use <code>tap</code> event to toggle flowers. </li>
-<li><a href="05-Generating_Flower_Count.html">Generating Flower Count</a><br/>
-   Count the number of neighbouring cells that contain flowers and output labels.</li>
-<li><a href="06-Uncover_Cells.html">Uncover Cells</a><br/>
-   Use a flood fill to uncover cells that are not neighbouring a flower.</li>
-<li><a href="07-First_Tap_is_Safe.html">First Tap is Safe</a><br/>
-   Ensure that the first tap does not uncover a flower.</li>
-<li><a href="08-Flags_and_Questions.html">Flags and Questions</a><br/>
-   Change from <code>tap</code> to a <code>touch</code> event to support flags and questions.</li>
-<li><a href="09-Cleaning_Up.html">Cleaning Up</a><br/>
-   Hide neighbour counts.</li>
-<li><a href="10-Check_for_Level_Win.html">Check for Level Win</a><br/>
-   Level win occurs when all flower locations have been identified.</li>
-</ul>
-<p>Additional steps</p>
-<ul>
-<li><a href="11-Scoring.html">Scoring</a><br/>
-   Level win occurs when all flower locations have been identified.</li>
-<li><a href="12-Menu_and_Top_Score.html">Menu and Top Score</a><br/>
-   Level win occurs when all flower locations have been identified.</li>
-</ul>
-<figure>
-  <img src="files/final_no_ui.png" alt="" width="60%" >
-  <figcaption>Completed version of game with UI missing</figcaption>
-</figure>
+		<h1>Uncover Cells</h1>
+<p>The uncover operation occurs when user clicks on an empty cell and that cell and its empty neighbours are uncovered.  The process occurs within the <code>onTap</code> function but wee can write it as a separate function which is called from <code>onTap</code> and we pass in the starting row,col.  So we have a function with following structure</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">floodFill</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
 
-<h3>Rules</h3>
-<p>The game starts with a grid of covered cells. Under some of the cells are flowers. The game is over when a flower is uncovered.</p>
-<p>Tapping on a cell uncovers it, and if none of its adjacent cells contain flowers, then the adjacent cells are also uncovered, and for those uncovered cells, if none of their adjacent cells contain flowers, they are also uncovered, and so on.</p>
-<p>Touch and hold on a cell toggles between the cell having a flag, a question mark, or nothing. Flags prevent a cell from being uncovered with a tap. Question marks are visual markers which don't affect what happens when the cell is clicked.</p>
-<h3>Assignment</h3>
-<p>We have worked through the steps in the lab sessions, so this assignment is just a check to see that you are keeping pace with the sessions.  </p>
-<p>Once you have completed the above steps </p>
-<div class="pager">
-<a class="btn btn-primary btn-lg" target="_blank" href="https://moodle.wit.ie/mod/assign/view.php?id=3610888" role="button">Submit using Moodle</a>
-</div>
+    <span class="c1">-- create a stack data structure to store cells to process</span>
+    <span class="c1">-- stack starts with current cell only</span>
+    <span class="kd">local</span> <span class="n">stack</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span><span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="n">col</span><span class="p">}</span> <span class="p">}</span>
+
+    <span class="c1">-- while stack is non-empty do</span>
+        <span class="c1">-- current = pop top entry off stack </span>
+        <span class="c1">-- if current state is covered then </span>
+            <span class="c1">-- set current state to uncovered</span>
+        <span class="c1">-- if current has zero neighbors with flowers then</span>
+            <span class="c1">-- loop over all neighbors of current</span>
+                <span class="c1">-- if neighbor is covered and does not have a flower then append to stack</span>
+    <span class="c1">-- end</span>
+<span class="kr">end</span>
+</code></pre></div>
+</td></tr></table>
+<p>Note: in lab session I included extra code for debugging.</p>
+<p>Next call <code>floodFill</code> inside <code>onTap</code> function, after verifying row and col of the tap event.</p>
 		
 		<ul class="pager">
 			
-			<li class="previous disabled"><a>&larr; Previous</a></li>
+			<li class="previous"><a href="05-Generating_Flower_Count.html">&larr; Previous (Generating Flower Count)</a></li>
 			
 			
 			
-			<li class="next"><a href="01-Project_Setup.html">Next (Project Setup) &rarr;</a></li>
+			<li class="next"><a href="07-First_Tap_is_Safe.html">Next (First Tap is Safe) &rarr;</a></li>
 			
 		</ul>
 
