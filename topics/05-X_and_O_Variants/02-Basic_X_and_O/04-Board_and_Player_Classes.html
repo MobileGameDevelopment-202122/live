@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Mobile Game Development</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../../style/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../../../style/codehilite/css/default.css" rel="stylesheet">
+    <link href="../../../style/misc/css/module.css" rel="stylesheet">
+    <link href="../../../style/misc/css/practical.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+	<script type="text/javascript"
+	  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script>
+
+  </head>
+
+<body>
+
+	<!-- Fixed navbar -->
+	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			
+			
+	    	<div class="collapse navbar-collapse">
+
+				<ul class="nav navbar-nav navbar-left">
+					<!-- Moodle -->
+					<li>
+						<div class="navbar-header">
+							<a class="navbar-brand" href="https://moodle.wit.ie/course/view.php?id=183218" target="_blank"><img height="18pt" src="../../../style/misc/img/moodle_logo_on_blue.gif" /></a>
+						</div>						
+					</li>
+				</ul>
+
+	      		<ul class="nav navbar-nav navbar-right">
+
+					<!-- module home -->
+					<li>
+						<div class="navbar-header">
+							<a class="navbar-brand" href="../../../index.html"><span class="glyphicon glyphicon-home"></span></a>
+						</div>						
+					</li>
+					
+					<!-- topics -->
+	        		<li>
+						<div class="navbar-collapse collapse" id="b">
+							<ul class="nav navbar-nav">
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+										<span class="glyphicon glyphicon-list-alt"></span>
+									</a>
+									<ul class="dropdown-menu" role="menu">
+										<li class="dropdown-header">Topics</li>
+										
+										<li >
+											<a href="../../../topics/01-Lua_Programming/index.html">Lua Programming</a>
+										</li>
+										
+										<li >
+											<a href="../../../topics/02-Introduction_to_Solar_2D/index.html">Introduction to Solar 2D</a>
+										</li>
+										
+										<li >
+											<a href="../../../topics/03-Chemistry_Sort/index.html">Chemistry Sort</a>
+										</li>
+										
+										<li >
+											<a href="../../../topics/04-Some_Simple_Games/index.html">Some Simple Games</a>
+										</li>
+										
+										<li class="active">
+											<a href="../../../topics/05-X_and_O_Variants/index.html">X and O Variants</a>
+										</li>
+										
+									</ul>
+								</li>
+							</ul>
+						</div>			
+					</li>
+
+					<!-- resources -->
+	        		<li>
+						<div class="navbar-collapse collapse" id="b">
+							<ul class="nav navbar-nav">
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+										<span class="glyphicon glyphicon-th-list"></span>
+									</a>
+									<ul class="dropdown-menu" role="menu">
+										<li class="dropdown-header">Resources</li>
+										
+										<li >
+											<a href="../../../topics/05-X_and_O_Variants/index.html#01-Game_Idea">Game Idea</a>
+										</li>
+										
+										<li class="active">
+											<a href="../../../topics/05-X_and_O_Variants/index.html#02-Basic_X_and_O">Basic X and O</a>
+										</li>
+										
+									</ul>
+								</li>
+							</ul>
+						</div>			
+					</li>
+								
+					<!-- pages-->
+	        		<li>
+						<div class="navbar-collapse collapse" id="c">
+							<ul class="nav navbar-nav">
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+										<span>Board and Player Classes</span
+									</a>
+									<ul class="dropdown-menu" role="menu">
+										
+										<li >
+											<a href="00-Outline.html">Outline</a>
+										</li>
+										
+										<li >
+											<a href="01-Project_Setup.html">Project Setup</a>
+										</li>
+										
+										<li >
+											<a href="02-Core_Classes.html">Core Classes</a>
+										</li>
+										
+										<li >
+											<a href="03-Assets.html">Assets</a>
+										</li>
+										
+										<li class="active">
+											<a href="04-Board_and_Player_Classes.html">Board and Player Classes</a>
+										</li>
+										
+										<li >
+											<a href="05-Basic_Game.html">Basic Game</a>
+										</li>
+										
+										<li >
+											<a href="06-Assignment.html">Assignment</a>
+										</li>
+										
+									</ul>
+								</li>
+							</ul>
+						</div>			
+					</li> 
+					
+	        	</ul>
+			</div>
+		</div>
+	</div>
+
+	<!-- contents -->
+	<div class="container">
+		
+		<ul class="pager">
+			
+			<li class="previous"><a href="03-Assets.html">&larr; Previous (Assets)</a></li>
+			
+			
+			
+			<li class="next"><a href="05-Basic_Game.html">Next (Basic Game) &rarr;</a></li>
+			
+		</ul>
+		
+		<h1>Board and Players</h1>
+<p>The <strong>Board</strong> class performs a similar role to the <strong>level</strong> class in <strong>BunnyHop</strong>.</p>
+<p>In order to support (later) any combination of human and computer players we have a number of classes representing players:</p>
+<ul>
+<li><strong>BasePlayer</strong> - the base class for all players.</li>
+<li><strong>HumanPlayer</strong> - first implementation of a human player.</li>
+<li><strong>FirstSpacePlayer</strong> - a computer player which uses the very very poor strategy of using the first empty cell it finds.</li>
+</ul>
+<p>A move can be represented by a pair of integers (the row and column coordinates), however, when passing back a move as a single return value we need to either wrap the pair of __int__s into an object or encode the pair of integers into a single integer. I prefer the encoding strategy, and use the following encoding</p>
+<p><strong>encoding (row,col) -&gt; pos</strong></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">pos</span> <span class="o">=</span> <span class="n">row</span><span class="o">*</span><span class="mi">3</span><span class="o">+</span><span class="n">col</span><span class="p">;</span>
+</code></pre></div>
+</td></tr></table>
+<p><strong>encoding pos -&gt; (row,col)</strong></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">row</span> <span class="o">=</span> <span class="n">pos</span> <span class="o">/</span> <span class="mi">3</span><span class="p">;</span>
+<span class="n">col</span> <span class="o">=</span> <span class="n">pos</span> <span class="o">%</span> <span class="mi">3</span><span class="p">;</span>
+</code></pre></div>
+</td></tr></table>
+<h2>Class: <strong>Board</strong></h2>
+<ul>
+<li>In package <strong>wit.cgd.xando.game</strong></li>
+<li>This class is similar to the <strong>Level</strong> class of </li>
+</ul>
+<h3>Fields</h3>
+<ul>
+<li>The standard <strong>TAG</strong> for logging . . .</li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span>  <span class="n">TAG</span> <span class="o">=</span> <span class="n">Board</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getName</span><span class="p">();</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>A (primitive) state machine to store that state of the current game . . .</li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">enum</span> <span class="n">GameState</span> <span class="p">{</span>
+        <span class="n">PLAYING</span><span class="p">,</span> <span class="n">DRAW</span><span class="p">,</span> <span class="n">X_WON</span><span class="p">,</span> <span class="n">O_WON</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="n">GameState</span>        <span class="n">gameState</span><span class="p">;</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>the actual board and symbols used to represent X and O . . . </li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">public</span> <span class="kd">final</span> <span class="kt">int</span>    <span class="n">EMPTY</span>   <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kd">public</span> <span class="kd">final</span> <span class="kt">int</span>    <span class="n">X</span>       <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kd">public</span> <span class="kd">final</span> <span class="kt">int</span>    <span class="n">O</span>       <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="kd">public</span> <span class="kt">int</span><span class="o">[][]</span>  <span class="n">cells</span>   <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="mi">3</span><span class="o">][</span><span class="mi">3</span><span class="o">]</span><span class="p">;</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>store instances for both players and reference to current player . . .</li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">public</span> <span class="n">BasePlayer</span> <span class="n">firstPlayer</span><span class="p">,</span> <span class="n">secondPlayer</span><span class="p">;</span>
+    <span class="kd">public</span> <span class="n">BasePlayer</span> <span class="n">currentPlayer</span><span class="p">;</span>
+</code></pre></div>
+</td></tr></table>
+<h3>Constructor</h3>
+<ul>
+<li>Call the <strong>init()</strong> method</li>
+</ul>
+<h3>Method: <strong>init</strong></h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">init</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>Calls the <strong>start</strong> method</li>
+</ul>
+<h3>Method: <strong>start</strong></h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">start</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>resets the <strong>cells</strong> array to be empty.</li>
+<li>sets the <strong>gameState</strong> to be <strong>PLAYING</strong></li>
+<li>sets the <strong>currentPLayer</strong> to be the <strong>firstPLayer</strong></li>
+</ul>
+<h3>Method: <strong>move</strong> (overloaded - 2 methods)</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">move</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">move</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>This calls the main move method with dummy values - used for human move</li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">move</span><span class="p">(</span><span class="kt">int</span> <span class="n">row</span><span class="p">,</span> <span class="kt">int</span> <span class="n">col</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>This method plays the move into (row,col) if valid.</li>
+<li>Return <strong>true</strong> if move valid else returns <strong>false</strong></li>
+<li>Logic of method is:</li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kr">if</span> <span class="n">currentPlayer</span> <span class="n">is</span> <span class="n">human</span> <span class="kr">then</span>
+       <span class="kr">if</span> <span class="p">(</span><span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="p">)</span> <span class="n">is</span> <span class="ow">not</span> <span class="n">a</span> <span class="n">valid</span> <span class="n">position</span> <span class="ow">or</span> <span class="n">that</span> <span class="n">position</span> <span class="n">is</span> <span class="ow">not</span> <span class="n">empty</span> <span class="kr">then</span> 
+            <span class="kr">return</span> <span class="kc">false</span>
+    <span class="kr">else</span>
+        <span class="n">get</span> <span class="n">move</span> <span class="n">from</span> <span class="n">__currentPlayer__</span> <span class="n">using</span> <span class="n">its</span> <span class="n">__move__</span> <span class="n">method</span>
+        <span class="n">de</span><span class="o">-</span><span class="n">encode</span> <span class="n">__pos__</span> <span class="n">from</span> <span class="n">__move__</span> <span class="n">method</span> <span class="n">into</span> <span class="n">row</span><span class="p">,</span><span class="n">col</span> <span class="n">pair</span>
+
+    <span class="o">//</span> <span class="n">now</span> <span class="n">have</span> <span class="n">a</span> <span class="n">valid</span> <span class="n">move</span> <span class="n">into</span> <span class="n">an</span> <span class="n">empty</span> <span class="n">cell</span> 
+
+    <span class="n">store</span> <span class="n">move</span>
+
+    <span class="n">check</span> <span class="kr">for</span> <span class="n">win</span> <span class="n">using</span> <span class="n">method</span> <span class="n">__hasWon</span><span class="p">()</span><span class="n">__</span> <span class="ow">and</span> <span class="n">update</span> <span class="n">game</span> <span class="n">state</span>
+
+    <span class="kr">if</span> <span class="n">still</span> <span class="n">playing</span> <span class="kr">then</span> <span class="n">check</span> <span class="kr">for</span> <span class="n">draw</span> <span class="n">using</span> <span class="n">method</span> <span class="n">__isDraw</span><span class="p">()</span><span class="n">__</span> <span class="ow">and</span> <span class="n">update</span> <span class="n">game</span> <span class="n">state</span>
+
+    <span class="kr">if</span> <span class="n">still</span> <span class="n">playing</span> <span class="kr">then</span> <span class="n">switch</span> <span class="n">player</span>
+</code></pre></div>
+</td></tr></table>
+<h3>Method: <strong>isDraw</strong></h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isDraw</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>returns true if game is a draw, false otherwise.</li>
+</ul>
+<h3>Method: <strong>hasWon</strong></h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">hasWon</span><span class="p">(</span><span class="kt">int</span> <span class="n">symbol</span><span class="p">,</span> <span class="kt">int</span> <span class="n">row</span><span class="p">,</span> <span class="kt">int</span> <span class="n">col</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>true if the player using symbol <strong>symbol</strong> has won after placing at position (<strong>row</strong>, <strong>col</strong>)</li>
+<li>Take care to ensure you understand the test that <strong>hasWon</strong> preforms. Rather than testing if a board contains a winning line (column/row/diagonal) for either player, it simply checks if that last move results in a win. Hence we can avoid checking the entire board (this is a big deal with we move to games with larger boards i.e. connect 4).</li>
+</ul>
+<h3>Method: <strong>render</strong></h3>
+<p>I forgot to talk about the render method . . . </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">render</span><span class="p">(</span><span class="n">SpriteBatch</span> <span class="n">batch</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>
+<p>Render the board so that is on centred horizontally on the bottom edges of the screen.
+   (I scaled the image by a factor of 4 so that it filled up most of the screen.)</p>
+</li>
+<li>
+<p>Render the contents of the <strong>cell</strong> array, drawing <strong>X</strong> or <strong>O</strong> as needed.</p>
+<ul>
+<li>use a nested <strong>for</strong> loop for this.</li>
+</ul>
+</li>
+<li>
+<p>All rendering is performed using the <strong>batch.draw()</strong> method</p>
+</li>
+</ul>
+<h2>The Player related classes</h2>
+<h3>Class: <strong>BasePlayer</strong></h3>
+<ul>
+<li>In package <strong>wit.cgd.xando.game</strong></li>
+<li>the base class for all players.</li>
+<li>abstract class</li>
+</ul>
+<h3>Fields</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">public</span> <span class="kt">boolean</span>  <span class="n">human</span><span class="p">;</span>
+    <span class="kd">public</span> <span class="kt">int</span>      <span class="n">mySymbol</span><span class="p">,</span> <span class="n">opponentSymbol</span><span class="p">;</span>
+    <span class="kd">public</span> <span class="n">String</span>   <span class="n">name</span><span class="p">;</span>
+    <span class="kd">public</span> <span class="n">Board</span>    <span class="n">board</span><span class="p">;</span>
+</code></pre></div>
+</td></tr></table>
+<h3>Constructor</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">public</span> <span class="nf">BasePlayer</span><span class="p">(</span><span class="n">Board</span> <span class="n">board</span><span class="p">,</span> <span class="kt">int</span> <span class="n">symbol</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>save local reference to <strong>board</strong> </li>
+<li>set fields to appropriate values -- use <strong>setSymbols</strong> and default to not human.</li>
+</ul>
+<h3>Method: <strong>setSymbol</strong></h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setSymbol</span><span class="p">(</span><span class="kt">int</span> <span class="n">symbol</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>set <strong>mySymbol</strong> and <strong>opponentSymbol</strong> using <strong>board.O</strong> and <strong>board.X</strong> constants.</li>
+</ul>
+<h3>Method: <strong>move</strong></h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">int</span> <span class="nf">move</span> <span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+<h3>Class: <strong>HumanPlayer</strong></h3>
+<ul>
+<li>In package <strong>wit.cgd.xando.game</strong></li>
+<li>subclass of <strong>BasePlayer</strong></li>
+</ul>
+<h3>Fields</h3>
+<ul>
+<li>none </li>
+</ul>
+<h3>Constructor</h3>
+<ul>
+<li>Call constructor of base class</li>
+<li>set <strong>human</strong> field to <strong>true</strong></li>
+</ul>
+<h3>Method: <strong>move</strong></h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">int</span> <span class="nf">move</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>Method body is empty since human move is via user input (so is processed by <strong>worldController</strong>). </li>
+<li>return 0 </li>
+</ul>
+<h3>Class: <strong>FirstSpacePlayer</strong></h3>
+<ul>
+<li>In package <strong>wit.cgd.xando.game.ai</strong></li>
+</ul>
+<h3>Fields</h3>
+<ul>
+<li>none </li>
+</ul>
+<h3>Constructor</h3>
+<ul>
+<li>Call constructor of base class</li>
+<li>set <strong>human</strong> field to <strong>false</strong></li>
+</ul>
+<h3>Method: <strong>move</strong></h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">int</span> <span class="nf">move</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>Find coordinates (row,col) of first free space and return this using encoding (row*3+col), otherwise return -1 (show not happen).</li>
+</ul>
+<p class="alert alert-success">Again, at this stage the project should compile but it does nothing (other than show the default start screen).</p>
+		
+		<ul class="pager">
+			
+			<li class="previous"><a href="03-Assets.html">&larr; Previous (Assets)</a></li>
+			
+			
+			
+			<li class="next"><a href="05-Basic_Game.html">Next (Basic Game) &rarr;</a></li>
+			
+		</ul>
+
+	</div>
+	
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="../../../style/bootstrap/js/bootstrap.min.js"></script>
+	
+  </body>
+</html>

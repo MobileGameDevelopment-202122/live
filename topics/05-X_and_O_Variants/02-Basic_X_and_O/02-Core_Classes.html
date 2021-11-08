@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Mobile Game Development</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../../style/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../../../style/codehilite/css/default.css" rel="stylesheet">
+    <link href="../../../style/misc/css/module.css" rel="stylesheet">
+    <link href="../../../style/misc/css/practical.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+	<script type="text/javascript"
+	  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script>
+
+  </head>
+
+<body>
+
+	<!-- Fixed navbar -->
+	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			
+			
+	    	<div class="collapse navbar-collapse">
+
+				<ul class="nav navbar-nav navbar-left">
+					<!-- Moodle -->
+					<li>
+						<div class="navbar-header">
+							<a class="navbar-brand" href="https://moodle.wit.ie/course/view.php?id=183218" target="_blank"><img height="18pt" src="../../../style/misc/img/moodle_logo_on_blue.gif" /></a>
+						</div>						
+					</li>
+				</ul>
+
+	      		<ul class="nav navbar-nav navbar-right">
+
+					<!-- module home -->
+					<li>
+						<div class="navbar-header">
+							<a class="navbar-brand" href="../../../index.html"><span class="glyphicon glyphicon-home"></span></a>
+						</div>						
+					</li>
+					
+					<!-- topics -->
+	        		<li>
+						<div class="navbar-collapse collapse" id="b">
+							<ul class="nav navbar-nav">
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+										<span class="glyphicon glyphicon-list-alt"></span>
+									</a>
+									<ul class="dropdown-menu" role="menu">
+										<li class="dropdown-header">Topics</li>
+										
+										<li >
+											<a href="../../../topics/01-Lua_Programming/index.html">Lua Programming</a>
+										</li>
+										
+										<li >
+											<a href="../../../topics/02-Introduction_to_Solar_2D/index.html">Introduction to Solar 2D</a>
+										</li>
+										
+										<li >
+											<a href="../../../topics/03-Chemistry_Sort/index.html">Chemistry Sort</a>
+										</li>
+										
+										<li >
+											<a href="../../../topics/04-Some_Simple_Games/index.html">Some Simple Games</a>
+										</li>
+										
+										<li class="active">
+											<a href="../../../topics/05-X_and_O_Variants/index.html">X and O Variants</a>
+										</li>
+										
+									</ul>
+								</li>
+							</ul>
+						</div>			
+					</li>
+
+					<!-- resources -->
+	        		<li>
+						<div class="navbar-collapse collapse" id="b">
+							<ul class="nav navbar-nav">
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+										<span class="glyphicon glyphicon-th-list"></span>
+									</a>
+									<ul class="dropdown-menu" role="menu">
+										<li class="dropdown-header">Resources</li>
+										
+										<li >
+											<a href="../../../topics/05-X_and_O_Variants/index.html#01-Game_Idea">Game Idea</a>
+										</li>
+										
+										<li class="active">
+											<a href="../../../topics/05-X_and_O_Variants/index.html#02-Basic_X_and_O">Basic X and O</a>
+										</li>
+										
+									</ul>
+								</li>
+							</ul>
+						</div>			
+					</li>
+								
+					<!-- pages-->
+	        		<li>
+						<div class="navbar-collapse collapse" id="c">
+							<ul class="nav navbar-nav">
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+										<span>Core Classes</span
+									</a>
+									<ul class="dropdown-menu" role="menu">
+										
+										<li >
+											<a href="00-Outline.html">Outline</a>
+										</li>
+										
+										<li >
+											<a href="01-Project_Setup.html">Project Setup</a>
+										</li>
+										
+										<li class="active">
+											<a href="02-Core_Classes.html">Core Classes</a>
+										</li>
+										
+										<li >
+											<a href="03-Assets.html">Assets</a>
+										</li>
+										
+										<li >
+											<a href="04-Board_and_Player_Classes.html">Board and Player Classes</a>
+										</li>
+										
+										<li >
+											<a href="05-Basic_Game.html">Basic Game</a>
+										</li>
+										
+										<li >
+											<a href="06-Assignment.html">Assignment</a>
+										</li>
+										
+									</ul>
+								</li>
+							</ul>
+						</div>			
+					</li> 
+					
+	        	</ul>
+			</div>
+		</div>
+	</div>
+
+	<!-- contents -->
+	<div class="container">
+		
+		<ul class="pager">
+			
+			<li class="previous"><a href="01-Project_Setup.html">&larr; Previous (Project Setup)</a></li>
+			
+			
+			
+			<li class="next"><a href="03-Assets.html">Next (Assets) &rarr;</a></li>
+			
+		</ul>
+		
+		<h1>Core Classes</h1>
+<p>In this step we will implement the core classes, similar to the <strong>BunnyHop</strong> projects.  Even though the current game is in a different genre (board versus 2d side-ways scrolling platform) the basic framework still applies.</p>
+<h2>Class: Constants</h2>
+<ul>
+<li>in package <strong>wit.cgd.xando.game.util</strong></li>
+<li>Stores all general game constants</li>
+</ul>
+<h3>Fields</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="c1">// Visible game world is 5 meters wide</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">float</span>   <span class="n">VIEWPORT_WIDTH</span> <span class="o">=</span> <span class="mf">5.0f</span><span class="p">;</span>
+    <span class="c1">// Visible game world is 5 meters tall</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">float</span>   <span class="n">VIEWPORT_HEIGHT</span>  <span class="o">=</span> <span class="mf">5.0f</span><span class="p">;</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span>  <span class="n">TEXTURE_ATLAS_OBJECTS</span> <span class="o">=</span> <span class="s">&quot;images/xando.atlas&quot;</span><span class="p">;</span>
+</code></pre></div>
+</td></tr></table>
+<h2>Class: WorldController</h2>
+<ul>
+<li>in package <strong>wit.cgd.xando.game</strong></li>
+<li>extends <strong>InputAdapter</strong> so that it will capture and process user input</li>
+</ul>
+<h3>Fields</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">TAG</span> <span class="o">=</span> <span class="n">WorldController</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getName</span><span class="p">();</span>
+    <span class="kd">public</span> <span class="kt">float</span> <span class="n">viewportWidth</span><span class="p">;</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">;</span>
+</code></pre></div>
+</td></tr></table>
+<h3>Constructor: <strong> public WorldController</strong></h3>
+<ul>
+<li>Following our pattern, this just calls method <strong>init()</strong></li>
+</ul>
+<h3>Method: <strong>init</strong></h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">init</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>Tell <strong>GdX</strong> to send input event to <strong>this</strong></li>
+</ul>
+<h3>Method: <strong>update</strong></h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="p">(</span><span class="kt">float</span> <span class="n">deltaTime</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>we will implement later</li>
+</ul>
+<h3>Method: <strong>touchDown</strong></h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">touchDown</span><span class="p">(</span><span class="kt">int</span> <span class="n">screenX</span><span class="p">,</span> <span class="kt">int</span> <span class="n">screenY</span><span class="p">,</span> <span class="kt">int</span> <span class="n">pointer</span><span class="p">,</span> <span class="kt">int</span> <span class="n">button</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>we will implement later</li>
+</ul>
+<h2>Class: WorldRenderer</h2>
+<ul>
+<li>in package <strong>wit.cgd.xando.game</strong></li>
+<li>implements <strong>Disposable</strong> to allow for safe disposing of <strong>SpriteBatch</strong>. </li>
+</ul>
+<h3>Fields</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">TAG</span> <span class="o">=</span> <span class="n">WorldRenderer</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getName</span><span class="p">();</span>
+
+    <span class="kd">public</span> <span class="n">OrthographicCamera</span>   <span class="n">camera</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">SpriteBatch</span>         <span class="n">batch</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">WorldController</span>     <span class="n">worldController</span><span class="p">;</span>
+</code></pre></div>
+</td></tr></table>
+<h3>Constructor</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">public</span> <span class="nf">WorldRenderer</span><span class="p">(</span><span class="n">WorldController</span> <span class="n">worldController</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>saves local reference to <strong>worldController</strong></li>
+<li>calls method <strong>init()</strong></li>
+</ul>
+<h3>Method: <strong>init</strong></h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">init</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>instantiates <strong>batch</strong>, <strong>camera</strong>.          </li>
+<li>sets camera position to be <strong>(0,0)</strong>.</li>
+</ul>
+<h3>Method: <strong>resize</strong></h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">resize</span><span class="p">(</span><span class="kt">int</span> <span class="n">width</span><span class="p">,</span> <span class="kt">int</span> <span class="n">height</span><span class="p">)</span> 
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>set <strong>camera.viewportWidth</strong> and <strong>update</strong> the <strong>camera</strong>.</li>
+<li>store screen <strong>width</strong>, <strong>height</strong>, and <strong>viewportWidth</strong> in <strong>worldColtroller</strong>.</li>
+</ul>
+<h3>Method: <strong>render</strong></h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">render</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>set the projection matrix for in advance of starting drawing </li>
+<li>start drawing</li>
+<li>drawing command implement later</li>
+<li>end drawing</li>
+</ul>
+<h3>Method: <strong>dispose</strong></h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">dispose</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>dispose of <strong>batch</strong></li>
+</ul>
+<p class="alert alert-success">At this stage the project should compile but it does nothing (other than show the default start screen).</p>
+<h1>The XandOMain and other Main classes</h1>
+<p>I have not talked about the main classes --- these follow the same lines as used for the <strong>BunnyHop</strong> game. So Just keep the default main classes that were created using the project setup tool and change the <strong>XandO-Desktop</strong> main class so that it will generate the appropriate sprite map, as we did for the <strong>BunnyHop</strong> game.  </p>
+<p>Obviously create the required folders ...</p>
+		
+		<ul class="pager">
+			
+			<li class="previous"><a href="01-Project_Setup.html">&larr; Previous (Project Setup)</a></li>
+			
+			
+			
+			<li class="next"><a href="03-Assets.html">Next (Assets) &rarr;</a></li>
+			
+		</ul>
+
+	</div>
+	
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="../../../style/bootstrap/js/bootstrap.min.js"></script>
+	
+  </body>
+</html>
