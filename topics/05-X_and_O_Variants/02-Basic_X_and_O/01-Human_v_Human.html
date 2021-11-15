@@ -123,16 +123,16 @@
 							<ul class="nav navbar-nav">
 								<li class="dropdown">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-										<span>Outline</span
+										<span>Human v Human</span
 									</a>
 									<ul class="dropdown-menu" role="menu">
 										
-										<li class="active">
+										<li >
 											<a href="00-Outline.html">Outline</a>
 										</li>
 										
-										<li >
-											<a href="01-Implementing_AI.html">Implementing AI</a>
+										<li class="active">
+											<a href="01-Human_v_Human.html">Human v Human</a>
 										</li>
 										
 									</ul>
@@ -151,32 +151,30 @@
 		
 		<ul class="pager">
 			
-			<li class="previous disabled"><a>&larr; Previous</a></li>
+			<li class="previous"><a href="00-Outline.html">&larr; Previous (Outline)</a></li>
 			
 			
 			
-			<li class="next"><a href="01-Implementing_AI.html">Next (Implementing AI) &rarr;</a></li>
+			<li class="next disabled"><a>Next &rarr;</a></li>
 			
 		</ul>
 		
-		<h1>X and O</h1>
-<p>In this practical we will implement the standard X and O game </p>
-<p style="text-align:center"><img width="30%" src="files/board.png"></p>
-
-<p>To start:</p>
+		<h1>Human v Human Game</h1>
+<p>To date we covered the implementation of the human v human game in lab sessions (W09), and your implementation should be similar to the attached files:</p>
 <ul>
-<li>Create project using default setting, using phone in portrait mode. </li>
-<li>Download and import <a href="files/assets.zip">assets</a></li>
+<li><a href="files/main.lua">main.lua</a></li>
+<li><a href="files/mylib.lua">mylib.lua</a></li>
+<li><a href="files/first_empty_space_player.lua">first_empty_space_player.lua</a></li>
 </ul>
-<p>In lab we will implement the basic X and O game and some AI variants.</p>
+<p>In <code>first_empty_space_player.lua</code> we have implemented a very simple AI player &mdash; it just picks the first free space. Today we want to replace this with two better AI players - one based on knowledge of the game and a second requiring little or no knowledge but performing a generic search (minimax).</p>
 		
 		<ul class="pager">
 			
-			<li class="previous disabled"><a>&larr; Previous</a></li>
+			<li class="previous"><a href="00-Outline.html">&larr; Previous (Outline)</a></li>
 			
 			
 			
-			<li class="next"><a href="01-Implementing_AI.html">Next (Implementing AI) &rarr;</a></li>
+			<li class="next disabled"><a>Next &rarr;</a></li>
 			
 		</ul>
 
