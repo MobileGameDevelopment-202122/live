@@ -111,6 +111,10 @@
 											<a href="../../../topics/05-X_and_O_Variants/index.html#02-Basic_X_and_O">Basic X and O</a>
 										</li>
 										
+										<li >
+											<a href="../../../topics/05-X_and_O_Variants/index.html#03-Ultimate_X_and_O">Ultimate X and O</a>
+										</li>
+										
 									</ul>
 								</li>
 							</ul>
@@ -160,10 +164,10 @@
 		</ul>
 		
 		<h1>Implementing AI</h1>
-<p>To date we covered the implementation of the basic game in lab sessions (W09), and your implementation should be similar to the attached files (The only difference with the attached and the version in the lab is that I have added sound effects.):</p>
+<p>To date we covered the implementation of the basic game in lab sessions (W09), and your implementation should be similar to the attached files. (The only difference with the attached and the version in the lab is that I have added sound effects.):</p>
 <ul>
 <li><a href="files/mylib.lua">mylib.lua</a><ul>
-<li>Functions for switching between 1D and 2D representation of board &mdash; these were used initially but when refactoring we switch to 1D exclusively.</li>
+<li>Functions for switching between 1D and 2D representation of the game board &mdash; these were used initially but when refactoring, in preparation for Ultimate X and O, we switched to 1D representation exclusively.</li>
 <li>Functions to test the logic state of a game board &mdash; these now all take the game board as an argument so will be usable when implementing <em>Ultimate X and O</em>.</li>
 </ul>
 </li>
@@ -171,12 +175,12 @@
 <li>Game UI.</li>
 </ul>
 </li>
-<li><a href="files/first_empty_space_player.lua">first_empty_space_player.lua</a><ul>
+<li><a href="files/first_space_player.lua">first_space_player.lua</a><ul>
 <li>The stupidest AI player that I can think of. Included to show a possible pattern for more advanced AI implementations.</li>
 </ul>
 </li>
 </ul>
-<p>In <code>first_empty_space_player.lua</code> we have implemented a very simple AI player &mdash; it just picks the first free space. Today we want to replace this with two better AI players - one based on knowledge of the game and a second requiring little or no knowledge but performing a generic search (minimax).</p>
+<p>In <code>first_space_player.lua</code> we have implemented a very simple AI player &mdash; it just picks the first free space. Today we want to replace this with two better AI players &mdash; one based on knowledge of the game and a second requiring little or no knowledge but performing a generic search (minimax).</p>
 <h2><code>random_impact_player</code></h2>
 <p>The <code>random_impact_player</code> picks available spaces based on their impact on the game, i.e., center before corners before sides, but also &mdash; to add variety &mdash; selects move at random when given multiple options with same impact.</p>
 <p>We can improve this player by also adding awareness of the current game state:</p>
@@ -212,8 +216,8 @@
 <span class="normal">24</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">ai</span> <span class="o">=</span> <span class="p">{</span> <span class="p">}</span>
 
 <span class="kd">local</span> <span class="n">rng</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;rng&quot;</span><span class="p">)</span>
-
 <span class="kd">local</span> <span class="n">mylib</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;mylib&quot;</span><span class="p">)</span>
+
 
 <span class="n">ai</span><span class="p">.</span><span class="n">move</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">players</span><span class="p">,</span> <span class="n">player</span><span class="p">)</span>
 
@@ -237,16 +241,21 @@
 </td></tr></table>
 <p>The resulting player is much better than the <code>first_space_player</code> but it still can be beaten. We could add more rules but the extra rules get more complicated and do not transfer to other games.  A better approach is to implement a generic search algorithm ... </p>
 <h2><code>minimax_player</code></h2>
-<p>The <code>minimax_player</code> uses the <a href="https://www.neverstopbuilding.com/blog/minimax">MiniMax algorithm</a> to determine the optimal move. Using the minimax algorithm has advantages:</p>
+<p>The <code>minimax_player</code> uses the 
+<a href="https://www.neverstopbuilding.com/blog/minimax">MiniMax algorithm</a>
+(or <a href="https://www.geeksforgeeks.org/minimax-algorithm-in-game-theory-set-3-tic-tac-toe-ai-finding-optimal-move/">here</a>)
+ to determine the optimal move. Using the minimax algorithm has advantages:</p>
 <ul>
 <li>Requires zero knowledge of the game strategy &mdash; only whether game is won/lost/draw &mdash; so is transferrable between games.</li>
-<li>The capability of the AI player easily controlled to facilitate players of different abilities.</li>
+<li>The capability of the AI player easily controlled to facilitate players of different abilities, by limiting the search depth.</li>
 </ul>
-<p>However depending on the complexity of the game the search tree needed to analyse a game can be too large to search effectively. To address this issue knowledge of game strategy can be used to implement a better game evaluation function which can direct and reduce the search tree.</p>
+<p>However depending on the complexity of the game the search tree needed to analyse a game can be too large to search effectively. To address this issue, knowledge of game strategy can be used to implement a better game evaluation function which can direct and reduce the search tree.</p>
 <p>Create file <code>minimax_player</code> using the following template and implement the above algorithm. This implementation is similar to that <a href="https://www.neverstopbuilding.com/blog/minimax">link to above</a> with the following differences:</p>
 <ul>
-<li>I don't switch between minimising and maximising as I switch between players, instead I multiple the score by negative one and always maxamise. It has the same effect, but is easier to code.</li>
+<li>I don't switch between minimising and maximising when I switch between players, instead I multiple the score by negative one and always maximise. It has the same effect, but is easier to code.</li>
 <li>The evaluation function <code>eval</code> is trivial &mdash; only returns 100 if game is won, otherwise returns 0.</li>
+<li>Also, I don't store the list of possible moves but only keep the best one found to date. I can't think of a reason as to why one would want to store the moves ... </li>
+<li>Also notice the <code>print</code> calls controlled by the <code>debug</code> flag.  I confess, I have never written a minimax implementation correctly the first time. And have always relied on similar print calls, with message indented based on depth, to track down issues.</li>
 </ul>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
 <span class="normal"> 2</span>
@@ -305,8 +314,7 @@
 <span class="normal">55</span>
 <span class="normal">56</span>
 <span class="normal">57</span>
-<span class="normal">58</span>
-<span class="normal">59</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">ai</span> <span class="o">=</span> <span class="p">{</span> <span class="p">}</span>
+<span class="normal">58</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">ai</span> <span class="o">=</span> <span class="p">{</span> <span class="p">}</span>
 
 <span class="kd">local</span> <span class="n">rng</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;rng&quot;</span><span class="p">)</span>
 <span class="kd">local</span> <span class="n">mylib</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;mylib&quot;</span><span class="p">)</span>
@@ -326,7 +334,7 @@
 <span class="c1">-- returns score,move</span>
 <span class="kr">function</span> <span class="nc">ai</span><span class="p">.</span><span class="nf">search</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">players</span><span class="p">,</span> <span class="n">player</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span>
 
-    <span class="kd">local</span> <span class="n">debug</span> <span class="o">=</span> <span class="kc">false</span>
+    <span class="kd">local</span> <span class="n">debug</span> <span class="o">=</span> <span class="kc">true</span>
 
     <span class="n">depth</span> <span class="o">=</span> <span class="n">depth</span> <span class="ow">or</span> <span class="mi">1</span>
     <span class="kd">local</span> <span class="n">indent</span> <span class="o">=</span> <span class="nb">string.rep</span><span class="p">(</span><span class="s2">&quot;  &quot;</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span>
@@ -352,7 +360,6 @@
     <span class="kr">if</span> <span class="n">debug</span> <span class="kr">then</span> <span class="nb">print</span><span class="p">(</span><span class="n">indent</span> <span class="o">..</span> <span class="s2">&quot;OPTIMAL MOVE &quot;</span><span class="o">..</span><span class="n">bestMove</span> <span class="o">..</span> <span class="s2">&quot; with score &quot;</span> <span class="o">..</span><span class="n">bestScore</span><span class="p">)</span> <span class="kr">end</span>
 
     <span class="c1">-- return best score and best move</span>
-    <span class="kr">return</span> <span class="o">-</span><span class="n">bestScore</span><span class="p">,</span> <span class="n">bestMove</span>
 <span class="kr">end</span>
 
 
@@ -367,6 +374,13 @@
 <span class="kr">return</span> <span class="n">ai</span>
 </code></pre></div>
 </td></tr></table>
+<h2>Upload to Moodle</h2>
+<p>When completed, create a zip file of your project and upload to Moodle using the following link.</p>
+<div class="pager">
+<a class="btn btn-primary btn-lg" target="_blank" href="https://moodle.wit.ie/mod/assign/view.php?id=3623505" role="button">Submit using Moodle</a>
+</div>
+
+<p>Note: this is just to prepare for the Ultimate X and O game, but I will get you to upload this just so I can be satisfied that you are following along with the lab sessions.</p>
 		
 		<ul class="pager">
 			
