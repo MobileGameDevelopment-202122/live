@@ -107,11 +107,11 @@
 											<a href="../../../topics/05-X_and_O_Variants/index.html#01-Game_Idea">Game Idea</a>
 										</li>
 										
-										<li class="active">
+										<li >
 											<a href="../../../topics/05-X_and_O_Variants/index.html#02-Basic_X_and_O">Basic X and O</a>
 										</li>
 										
-										<li >
+										<li class="active">
 											<a href="../../../topics/05-X_and_O_Variants/index.html#03-Ultimate_X_and_O">Ultimate X and O</a>
 										</li>
 										
@@ -135,10 +135,6 @@
 											<a href="00-Outline.html">Outline</a>
 										</li>
 										
-										<li >
-											<a href="01-Implementing_AI.html">Implementing AI</a>
-										</li>
-										
 									</ul>
 								</li>
 							</ul>
@@ -159,27 +155,70 @@
 			
 			
 			
-			<li class="next"><a href="01-Implementing_AI.html">Next (Implementing AI) &rarr;</a></li>
+			<li class="next disabled"><a>Next &rarr;</a></li>
 			
 		</ul>
 		
-		<h1>X and O</h1>
-<p>In this practical we will implement the standard X and O game </p>
-<p style="text-align:center"><img width="30%" src="files/board.png"></p>
-
-<p>To start:</p>
+		<h1>Ultimate X and O</h1>
+<p>We are now ready to start Ultimate X and O. First review the rules:</p>
 <ul>
-<li>Create project using default setting, using phone in portrait mode. </li>
-<li>Download and import <a href="files/assets.zip">assets</a></li>
+<li>Each small 3 × 3 X and O board is referred to as a sub-board, and the larger 3 × 3 board is referred to as the main board.</li>
+<li>Each move consists of picking, <strong>if allowed</strong>, a sub-board, and then picking a location within that board.</li>
+<li>Normally a player is not allowed to pick the sub-board, but must use the sub-board determined by the previous move. However a player is free to pick a sub-board if:<ul>
+<li>It is the first move of the game.</li>
+<li>The sub-board indicated by the previous move is already won/tied. </li>
 </ul>
-<p>In lab we will implement the basic X and O game and some AI variants.</p>
+</li>
+<li>The sub-board are won/lost/tied using normal X and O rules, resulting in a X, O or blank in the main board.</li>
+<li>Game ends when either player wins the main board or there are no more legal moves remaining.</li>
+</ul>
+<h2>Implementation</h2>
+<p>The implementation that we have used to date is easily adopted to Ultimate X and O. Here I will only outline the steps that I carried out, you need to fill in the details:</p>
+<p><strong>Game Logic</strong></p>
+<ul>
+<li>Keep <code>board</code> to store the state of the main game board. Create table <code>subboards</code> which stores the states of the nine sub-boards. </li>
+<li>All of the functions in <code>mylib</code> to check for wins/loss/tie work as is &mdash; just pass either the main board, i.e. <code>board</code>, or one of the sub-boards i.e. <code>subboards[k]</code> for some value of <code>k</code>.</li>
+</ul>
+<p><strong>Graphics</strong></p>
+<figure>
+<img src="files/Picture_1.jpg" width="9%" />
+<img src="files/Picture_2.jpg" width="9%" />
+<img src="files/Picture_3.jpg" width="9%" />
+<img src="files/Picture_4.jpg" width="9%" />
+<img src="files/Picture_5.jpg" width="9%" />
+<img src="files/Picture_6.jpg" width="9%" />
+<img src="files/Picture_7.jpg" width="9%" />
+<img src="files/Picture_8.jpg" width="9%" />
+<img src="files/Picture_9.jpg" width="9%" />
+<img src="files/Picture_10.jpg" width="9%" />
+<figcaption>First 10 moves in a typical game.</figcaption>
+</figure>
+
+<ul>
+<li>The function <code>drawLine</code> can be used to draw the sub-grids.  I wrote a small function, <code>drawBoard</code>, which draws a board centered at a given location and at a given scale.  I call this function 10 times (9 sub-boards and once for the main board).</li>
+<li>The table <code>squares</code>, which stores the <code>symbol</code> for the main board should also store the symbols played in the corresponding sub-board. I used <code>subsquares</code> for this.</li>
+<li>The <code>resetBoard</code> function needs to be extended to</li>
+<li>Dispose of the resources in <code>subsquares</code> for each <code>square</code> in <code>squares</code>.</li>
+<li>Reset the <code>subboards</code> table to represent the empty board.</li>
+</ul>
+<p><strong>UI</strong></p>
+<ul>
+<li>A move consists of one or two taps.  </li>
+<li>If the player is not free to pick the sub-board, then the current sub-board is highlighted and the player just picks the location. Note &mdash; I coded this by dealing with events relative to the main board. This does make life much easier.</li>
+<li>If the player is free to pick the sub-board, then the first tap is to select a sub-board.</li>
+<li>The validating of the one/two taps is carried out in <code>checkMove</code>, which then calls <code>move</code> with two integers (for me <code>k</code> and <code>kk</code>) which indicate the sub-board number and the cell in that sub-board.</li>
+</ul>
+<p><strong>AI</strong></p>
+<ul>
+<li>Need to pass both <code>boards</code> and <code>subboards</code> to <code>ai.move</code> function.</li>
+<li>The minimax implementation should work as is &mdash; except for the loop iterating over the moves. The <code>1...9</code> loop in X and O needs to be replaced by looping over sub-boards and looping over cells in that board.</li>
+<li>The main issue here is the increased size of the game tree. You can improve the search by implementing a more advanced evaluation function.</li>
+</ul>
 <h2>Upload to Moodle</h2>
 <p>When completed, create a zip file of your project and upload to Moodle using the following link.</p>
 <div class="pager">
 <a class="btn btn-primary btn-lg" target="_blank" href="https://moodle.wit.ie/mod/assign/view.php?id=3623505" role="button">Submit using Moodle</a>
 </div>
-
-<p>Note: this is just to prepare for the Ultimate X and O game, but I will get you to upload this just so I can be satisfied that you are following along with the lab sessions.</p>
 		
 		<ul class="pager">
 			
@@ -187,7 +226,7 @@
 			
 			
 			
-			<li class="next"><a href="01-Implementing_AI.html">Next (Implementing AI) &rarr;</a></li>
+			<li class="next disabled"><a>Next &rarr;</a></li>
 			
 		</ul>
 
